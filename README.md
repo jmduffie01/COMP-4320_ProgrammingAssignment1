@@ -1,2 +1,2 @@
-# COMP-4320 - Programming Assignment 1
-## Fall 2022 - Saad Biaz
+COMP-4320 - Saad Biaz (Fall 2022)
+# Programming Assignment 1
