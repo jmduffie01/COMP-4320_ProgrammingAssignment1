@@ -12,8 +12,8 @@ public class TCPEchoClient {
     // Server name or IP address
     String server = args[0];
     
-    // Convert input String to bytes using the default character encoding
-    byte[] byteBuffer = args[1].getBytes();
+    // Declare byte buffer for future use
+    byte[] byteBuffer = null;
 
     // user input process
     boolean numberSelected = false;
@@ -22,13 +22,20 @@ public class TCPEchoClient {
       System.out.print("Input a number:  ");
       String userString = userInput.nextLine();
       try {
-        Integer.parseInt(userString);
+        long userNum = Long.parseLong(userString);
         numberSelected = true;
         byteBuffer = userString.getBytes();
+        if (userNum > Math.pow(2, 32) - 1) {
+          System.out.println("Invalid input! Enter a number less than 4,294,967,296.");
+          numberSelected = false;
+        }
+        if (userNum < 0) {
+          System.out.println("Invalid input! Enter a non-negative number.");
+          numberSelected = false;
+        }
       }
       catch (NumberFormatException e) {
-        System.out.println("Invalid! Input valid integer (max: 2,147,483,647)."); // FIX THIS
-
+        System.out.println("Invalid input! Enter a valid integer.");
       }
     }
     userInput.close();
