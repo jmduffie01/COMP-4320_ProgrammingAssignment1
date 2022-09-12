@@ -38,5 +38,3 @@ public class TCPEchoClient {
     socket.close();  // Close the socket and its streams
   }
 }
-
-// this is a test
