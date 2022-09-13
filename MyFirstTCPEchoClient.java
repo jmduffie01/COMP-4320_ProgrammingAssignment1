@@ -76,13 +76,18 @@ public class MyFirstTCPEchoClient {
     // calculate sending/receiving time elapsed
     long elapsedTime = endTime - startTime;
 
-    // convert byte array to int
-    
+    long receivedInt = convertByteArrToUnsignedInt(byteBuffer);
 
-    System.out.println("Received Message:  " + new String(byteBuffer));
+    System.out.println("Received Message:  " + receivedInt);
     System.out.println("Time Elapsed (ms): " + elapsedTime);
 
     // Close the socket and its streams
     socket.close();
+  }
+
+  //converts bytes to unsigned int (really just a long, using lowest 32 bits)
+  private static long convertByteArrToUnsignedInt(byte[] bytes) {
+    return ((bytes[0] & 0xFF) << 24 | (bytes[1] & 0xFF) << 16 |
+            (bytes[2] & 0xFF) << 8 | (bytes[3] & 0xFF) << 0);
   }
 }
