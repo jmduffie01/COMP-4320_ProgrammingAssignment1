@@ -1,8 +1,8 @@
 import java.net.*;  // for Socket
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;   // for IOException and Input/OutputStream
 
-public class TCPEchoClient {
+public class MyFirstTCPEchoClient {
 
   public static void main(String[] args) throws IOException {
 
@@ -53,6 +53,7 @@ public class TCPEchoClient {
 
     // Send the encoded string to the server
     out.write(byteBuffer);
+    long startTime = System.currentTimeMillis();
 
     // Receive the same string back from the server
 
@@ -70,8 +71,13 @@ public class TCPEchoClient {
       // add bytes received in last read to total
       totalBytesRcvd += bytesRcvd;
     }
+    long endTime = System.currentTimeMillis();
+    
+    // calculate sending/receiving time elapsed
+    long elapsedTime = endTime - startTime;
 
-    System.out.println("Received: " + new String(byteBuffer));
+    System.out.println("Received Message:  " + new String(byteBuffer));
+    System.out.println("Time Elapsed (ms): " + elapsedTime);
 
     // Close the socket and its streams
     socket.close();
