@@ -24,7 +24,8 @@ public class TCPEchoClient {
       try {
         long userNum = Long.parseLong(userString);
         numberSelected = true;
-        byteBuffer = userString.getBytes();
+        // convert string to bytes in UTF-16
+        byteBuffer = userString.getBytes("UTF-16");
         if (userNum > Math.pow(2, 32) - 1) {
           System.out.println("Invalid input! Enter a number less than 4,294,967,296.");
           numberSelected = false;
@@ -60,7 +61,7 @@ public class TCPEchoClient {
     // Bytes received in last read
     int bytesRcvd;
 
-    // while the amt of rcvd bytes doesn't exceed the buffer length
+    // while the amt of received bytes doesn't exceed the buffer length
     while (totalBytesRcvd < byteBuffer.length) {
       // read data to byte buffer, until end of buffer reached
       if ((bytesRcvd = in.read(byteBuffer, totalBytesRcvd,  
