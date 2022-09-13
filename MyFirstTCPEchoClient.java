@@ -72,9 +72,12 @@ public class MyFirstTCPEchoClient {
       totalBytesRcvd += bytesRcvd;
     }
     long endTime = System.currentTimeMillis();
-    
+
     // calculate sending/receiving time elapsed
     long elapsedTime = endTime - startTime;
+
+    // convert byte array to int
+    
 
     System.out.println("Received Message:  " + new String(byteBuffer));
     System.out.println("Time Elapsed (ms): " + elapsedTime);
