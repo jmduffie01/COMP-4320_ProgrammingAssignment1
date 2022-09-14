@@ -1,5 +1,7 @@
 import java.net.*;  // for Socket, ServerSocket, and InetAddress
+import java.nio.charset.StandardCharsets;
 import java.io.*;   // for IOException and Input/OutputStream
+import java.math.BigInteger;
 
 public class MyFirstTCPEchoServer {
   
@@ -37,10 +39,14 @@ public class MyFirstTCPEchoServer {
       OutputStream out = clntSock.getOutputStream();
 
       // Receive until client closes connection, indicated by -1 return
-      while ((recvMsgSize = in.read(byteBuffer)) != -1)
-        out.write(byteBuffer, 0, recvMsgSize);
+      while ((recvMsgSize = in.read(byteBuffer)) != -1) {
+        String S = new String(byteBuffer, "UTF-16");
+        BigInteger I = new BigInteger(S);
+        byte[] bytes = I.toByteArray();
+        out.write(bytes, 0, recvMsgSize);
+      }
 
-      // Close the socket.  We are done with this client!
+      // Close the socket. We are done with this client!
       clntSock.close();
     }
   }

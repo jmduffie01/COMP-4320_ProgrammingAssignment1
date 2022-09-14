@@ -1,6 +1,7 @@
 import java.net.*;  // for Socket
 import java.util.*;
 import java.io.*;   // for IOException and Input/OutputStream
+import java.math.BigInteger;
 
 public class MyFirstTCPEchoClient {
 
@@ -55,8 +56,6 @@ public class MyFirstTCPEchoClient {
     out.write(byteBuffer);
     long startTime = System.currentTimeMillis();
 
-    // Receive the same string back from the server
-
     // Total bytes received so far
     int totalBytesRcvd = 0;
     // Bytes received in last read
@@ -72,22 +71,18 @@ public class MyFirstTCPEchoClient {
       totalBytesRcvd += bytesRcvd;
     }
     long endTime = System.currentTimeMillis();
-
     // calculate sending/receiving time elapsed
     long elapsedTime = endTime - startTime;
 
-    long receivedInt = convertByteArrToUnsignedInt(byteBuffer);
+    BigInteger i = new BigInteger(byteBuffer);
+    // must use long, as int does not reach desired limit!
+    // integer only able to represent -2,147,483,648 to 2,147,483,647 in java!!!
+    long l = i.longValue();
 
-    System.out.println("Received Message:  " + receivedInt);
+    System.out.println("Received Message:  " + l);
     System.out.println("Time Elapsed (ms): " + elapsedTime);
 
     // Close the socket and its streams
     socket.close();
-  }
-
-  //converts bytes to unsigned int (really just a long, using lowest 32 bits)
-  private static long convertByteArrToUnsignedInt(byte[] bytes) {
-    return ((bytes[0] & 0xFF) << 24 | (bytes[1] & 0xFF) << 16 |
-            (bytes[2] & 0xFF) << 8 | (bytes[3] & 0xFF) << 0);
   }
 }
