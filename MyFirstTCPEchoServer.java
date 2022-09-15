@@ -41,9 +41,23 @@ public class MyFirstTCPEchoServer {
       // Receive until client closes connection, indicated by -1 return
       while ((recvMsgSize = in.read(byteBuffer)) != -1) {
         String S = new String(byteBuffer, "UTF-16");
-        BigInteger I = new BigInteger(S);
-        byte[] bytes = I.toByteArray();
-        out.write(bytes, 0, recvMsgSize);
+        System.out.println("Sentence S from client: " + S);
+        
+        String output = "";
+        for ( char c : S.toCharArray()) {
+          if (Character.isDigit(c)) {
+            output += c;
+          }
+        }
+        int intValue = Integer.valueOf(output);
+        System.out.println("Integer a being sent to client: " + intValue);
+
+        // turn integer to hex and convert to bytes
+        output = Integer.toHexString(intValue);
+        byteBuffer = output.getBytes();
+
+        // send back to client
+        out.write(byteBuffer, 0, byteBuffer.length);
       }
 
       // Close the socket. We are done with this client!
